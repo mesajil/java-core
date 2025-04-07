@@ -1,31 +1,35 @@
-public class Threads {
-  private static int num = 0;
+import java.util.concurrent.atomic.AtomicInteger;
 
-  public static synchronized void count() {
-    num++;
+public class Threads2 {
+  private static AtomicInteger num = new AtomicInteger(0);
+
+  public static void count() {
+    num.incrementAndGet();
   }
 
   public static void main(String[] args) {
     Thread thread1 = new Thread(() -> {
-      for (int i = 0; i < 10000; i++) {
+      for (int i = 0; i < 9999; i++) {
         count();
       }
-    }, "Thread-1");
+    });
 
     Thread thread2 = new Thread(() -> {
-      for (int i = 0; i < 10000; i++) {
+      for (int i = 0; i < 9999; i++) {
         count();
       }
-    }, "Thread-2");
+    });
 
     thread1.start();
     thread2.start();
+
     try {
-      thread1.join(); 
-      thread2.join(); 
+      thread1.join();
+      thread2.join();
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+
     System.out.println(Thread.currentThread().getName() + " - Count: " + num);
   }
 }
