@@ -33,4 +33,9 @@ public class Student {
     public void setMark(double mark) {
         this.mark = mark;
     }
+
+    @Override
+    public String toString() {
+        return "Student{id=" + id + ", name='" + name + "', mark=" + mark + "}";
+    }
 }
